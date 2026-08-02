@@ -1,0 +1,8 @@
+.git
+.next
+node_modules
+playwright-report
+test-results
+Kopirosoft_Portfolio.pdf
+PRD.md
+*.log

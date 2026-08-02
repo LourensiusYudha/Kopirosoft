@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Next.js output
+.next/
+out/
+
+# Vercel project link
+.vercel/
+
+# Tests and coverage
+playwright-report/
+test-results/
+coverage/
+
+# Environment files
+.env*
+!.env.example
+
+# Logs and local files
+*.log
+.DS_Store
+*.pem
+
+# TypeScript cache
+*.tsbuildinfo
