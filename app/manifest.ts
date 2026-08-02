@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Modern banking for daily money management and global financial freedom.",
     start_url: "/",
     display: "standalone",
-    background_color: "#fdfdfd",
-    theme_color: "#191919",
+    background_color: "#ffffff",
+    theme_color: "#1b1b1b",
   };
 }
