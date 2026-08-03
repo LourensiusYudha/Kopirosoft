@@ -80,7 +80,7 @@ export function HeroSection() {
   return (
     <>
       <section id="home" className="px-4">
-        <div className="relative min-h-[620px] overflow-hidden rounded-lg sm:min-h-[650px] lg:min-h-[675px]">
+        <div className="hero-frame relative overflow-hidden rounded-lg">
           <Image src="/images/hero.webp" alt="Customer reviewing receipts while managing daily finances" fill priority className="object-cover object-top" sizes="(max-width: 1920px) 100vw, 1888px" />
           <div className="absolute inset-x-0 top-0 h-[48%] bg-gradient-to-b from-white/45 to-transparent" aria-hidden="true" />
           <div className="absolute left-7 top-12 max-w-[670px] sm:left-9 sm:top-14">

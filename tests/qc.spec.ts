@@ -46,6 +46,30 @@ test("classic desktop scrollbars do not create horizontal overflow", async ({ pa
   expect(geometry.scrollbarColor).toBe("rgb(214, 106, 71) rgb(247, 247, 247)");
 });
 
+test("hero fits short Windows desktop viewports without becoming undersized", async ({ page }) => {
+  const shortDesktopViewports = [
+    { width: 1536, height: 720 },
+    { width: 1920, height: 768 },
+    { width: 2560, height: 1080 },
+  ];
+
+  for (const viewport of shortDesktopViewports) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    const geometry = await page.evaluate(() => {
+      const hero = document.querySelector<HTMLElement>(".hero-frame")?.getBoundingClientRect();
+      return { bottom: hero?.bottom ?? 0, height: hero?.height ?? 0, viewportHeight: innerHeight };
+    });
+
+    expect(geometry.bottom).toBeLessThanOrEqual(geometry.viewportHeight + 1);
+    expect(geometry.height).toBeGreaterThanOrEqual(600);
+  }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await expect.poll(() => page.locator(".hero-frame").evaluate((hero) => hero.getBoundingClientRect().height)).toBe(675);
+});
+
 test("navigation uses the collision-free breakpoint", async ({ page }) => {
   await page.setViewportSize({ width: 768, height: 900 });
   await page.goto("/");
