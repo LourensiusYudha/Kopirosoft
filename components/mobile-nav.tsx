@@ -3,18 +3,12 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { List, X } from "@phosphor-icons/react";
 import { useState } from "react";
-
-const links = [
-  ["Home", "#home"],
-  ["Features", "#features"],
-  ["Solutions", "#solutions"],
-  ["Pricing", "#pricing"],
-  ["About Us", "#about"],
-];
+import { navigationLinks, useActiveSection } from "@/components/use-active-section";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
+  const { activeSection, setActiveSection } = useActiveSection();
 
   return (
     <div className="md:hidden">
@@ -35,12 +29,16 @@ export function MobileNav() {
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
           >
-            {links.map(([label, href], index) => (
+            {navigationLinks.map(({ label, href, id }, index) => (
               <motion.a
                 key={href}
                 href={href}
-                className="focus-ring flex min-h-12 items-center rounded-lg px-4 text-base hover:bg-white/10"
-                onClick={() => setOpen(false)}
+                aria-current={activeSection === id ? "location" : undefined}
+                className={`focus-ring flex min-h-12 items-center rounded-lg px-4 text-base transition-colors hover:bg-white/10 ${activeSection === id ? "text-[#f09235]" : "text-white"}`}
+                onClick={() => {
+                  setActiveSection(id);
+                  setOpen(false);
+                }}
                 initial={reduce ? false : { opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.035 }}

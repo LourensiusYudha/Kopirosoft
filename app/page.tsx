@@ -9,8 +9,11 @@ import {
   YoutubeLogo,
 } from "@phosphor-icons/react/dist/ssr";
 import { MobileNav } from "@/components/mobile-nav";
+import { DesktopNav } from "@/components/desktop-nav";
+import { AboutReadingText } from "@/components/about-reading-text";
 import { Reveal } from "@/components/reveal";
 import { Showcase } from "@/components/showcase";
+import { TestimonialCarousel } from "@/components/testimonial-carousel";
 
 const features = [
   {
@@ -32,27 +35,6 @@ const features = [
     image: "/images/investment.webp",
     title: "Investment strategies simplified.",
     body: "Leverage AI-driven recommendations to construct a diversified portfolio aligned with your risk appetite and financial aspirations, all within an intuitive interface.",
-  },
-];
-
-const testimonials = [
-  {
-    image: "/images/testimonial-lisa.webp",
-    quote: "Finance has revolutionized our cash flow, providing a clear, real-time view of our financial health. A must-have for any modern business.",
-    name: "Lisa Bonjour",
-    role: "CEO of Podcasterio",
-  },
-  {
-    image: "/images/testimonial-anna.webp",
-    quote: "Finance is an indispensable tool for content creators. It has simplified my financial tracking, making tax season a breeze. Highly recommended!",
-    name: "Anna Delay",
-    role: "Youtuber - 2M Subscriber",
-  },
-  {
-    image: "/images/testimonial-andreas.webp",
-    quote: "Finance has transformed our company's financial operations. The insights and efficiency gains are remarkable. A game-changer for Kopirosoft!",
-    name: "Andreas Alexan",
-    role: "CEO of Kopirosoft",
   },
 ];
 
@@ -91,21 +73,10 @@ function DownloadButton({ label = "Download" }: { label?: string }) {
 }
 
 function Nav() {
-  const links = ["Home", "Features", "Solutions", "Pricing", "About Us"];
   return (
-    <header className="relative flex h-[60px] items-center justify-between px-6 sm:px-10 lg:px-12">
+    <header className="sticky top-0 z-40 flex h-[60px] items-center justify-between border-b border-black/[.06] bg-white/95 px-6 backdrop-blur-xl sm:px-10 lg:px-12">
       <a className="focus-ring rounded-md" href="#home"><FinanceLogo className="text-[17px]" /></a>
-      <nav aria-label="Primary navigation" className="absolute left-1/2 hidden -translate-x-1/2 items-center rounded-lg border border-[#dedede] bg-white p-1 md:flex">
-        {links.map((link) => (
-          <a
-            key={link}
-            href={`#${link.toLowerCase().replace(" us", "").replace(" ", "-")}`}
-            className={`focus-ring rounded-md px-5 py-2 text-xs font-semibold transition-colors duration-200 hover:bg-[#f4f4f4] ${link === "Home" ? "text-[#d66a47]" : "text-[#343434]"}`}
-          >
-            {link}
-          </a>
-        ))}
-      </nav>
+      <DesktopNav />
       <div className="hidden md:block"><DownloadButton /></div>
       <MobileNav />
     </header>
@@ -219,19 +190,7 @@ function About() {
           <h2 className="text-2xl font-bold leading-8 tracking-[-.04em]">About</h2>
           <SectionMosaic compact />
         </div>
-        <p className="mt-3 text-[20px] font-semibold leading-[1.3125] tracking-[-.05em] sm:text-2xl">
-          <span className="sm:hidden">
-            We are here to redefine how you interact with money through a modern, transparent, and adaptive banking ecosystem.
-            <span className="text-[#dedede]"> From daily expense logging to long-term wealth planning, we empower you to take full control of your financial freedom.</span>
-          </span>
-          <span className="hidden sm:inline">
-            We are here to redefine how you interact with money<br />
-            through a modern, transparent, and adaptive banking<br />
-            ecosystem. <span className="text-[#dedede]">From daily expense logging to long-term<br />
-            wealth planning, we empower you to take full control of<br />
-            your financial freedom.</span>
-          </span>
-        </p>
+        <AboutReadingText />
       </Reveal>
     </section>
   );
@@ -311,20 +270,7 @@ function Testimonials() {
           </p>
         </Reveal>
       </div>
-      <div className="ml-[21.6667%] mt-6 grid grid-flow-col auto-cols-[78%] gap-4 overflow-x-auto pr-4 [scrollbar-width:none] sm:auto-cols-[44%] lg:auto-cols-[396px] lg:gap-7">
-        {testimonials.map((testimonial, index) => (
-          <Reveal key={testimonial.name} delay={index * 0.05}>
-            <article className="testimonial-card relative aspect-[.66] overflow-hidden rounded-lg text-white">
-              <Image src={testimonial.image} alt={`${testimonial.name} sharing a Finance testimonial`} fill className="object-cover" sizes="(max-width: 768px) 78vw, 410px" />
-              <div className="absolute inset-x-0 bottom-0 z-10 p-7">
-                <blockquote className="text-[16px] font-medium leading-[21px] sm:text-lg">“{testimonial.quote}”</blockquote>
-                <p className="mt-6 text-[15px] font-bold leading-5">{testimonial.name}</p>
-                <p className="mt-1 text-[13.5px] leading-[18px] text-white/80">{testimonial.role}</p>
-              </div>
-            </article>
-          </Reveal>
-        ))}
-      </div>
+      <TestimonialCarousel />
     </section>
   );
 }
