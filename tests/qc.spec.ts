@@ -21,6 +21,31 @@ test("layout stays within the viewport from mobile to ultrawide", async ({ page 
   }
 });
 
+test("classic desktop scrollbars do not create horizontal overflow", async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto("/");
+  await page.addStyleTag({ content: "html { scrollbar-gutter: stable !important; }" });
+
+  const geometry = await page.evaluate(() => {
+    const viewportWidth = document.documentElement.clientWidth;
+    const shell = document.querySelector<HTMLElement>(".site-shell")?.getBoundingClientRect();
+    return {
+      viewportWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+      shellLeft: shell?.left ?? 0,
+      shellRight: shell?.right ?? 0,
+      colorScheme: getComputedStyle(document.documentElement).colorScheme,
+      scrollbarColor: getComputedStyle(document.documentElement).scrollbarColor,
+    };
+  });
+
+  expect(geometry.scrollWidth).toBeLessThanOrEqual(geometry.viewportWidth);
+  expect(geometry.shellLeft).toBeGreaterThanOrEqual(0);
+  expect(geometry.shellRight).toBeLessThanOrEqual(geometry.viewportWidth + 1);
+  expect(geometry.colorScheme).toBe("light");
+  expect(geometry.scrollbarColor).toBe("rgb(214, 106, 71) rgb(247, 247, 247)");
+});
+
 test("navigation uses the collision-free breakpoint", async ({ page }) => {
   await page.setViewportSize({ width: 768, height: 900 });
   await page.goto("/");
