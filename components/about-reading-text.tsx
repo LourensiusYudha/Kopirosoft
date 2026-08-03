@@ -11,7 +11,7 @@ export function AboutReadingText() {
     target: targetRef,
     offset: ["start 18%", "end 14%"],
   });
-  const secondSentenceColor = useTransform(scrollYProgress, [0.28, 0.82], ["#dedede", "#1b1b1b"]);
+  const secondSentenceColor = useTransform(scrollYProgress, [0.55, 0.9], ["#dedede", "#1b1b1b"]);
 
   return (
     <p
