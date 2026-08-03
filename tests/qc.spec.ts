@@ -13,7 +13,7 @@ const viewports = [
 test("layout stays within the viewport from mobile to ultrawide", async ({ page }) => {
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
-    await page.goto("/");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
@@ -23,7 +23,7 @@ test("layout stays within the viewport from mobile to ultrawide", async ({ page 
 
 test("classic desktop scrollbars do not create horizontal overflow", async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await page.addStyleTag({ content: "html { scrollbar-gutter: stable !important; }" });
 
   const geometry = await page.evaluate(() => {
@@ -55,7 +55,7 @@ test("hero fits short Windows desktop viewports without becoming undersized", as
 
   for (const viewport of shortDesktopViewports) {
     await page.setViewportSize(viewport);
-    await page.goto("/");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
     const geometry = await page.evaluate(() => {
       const hero = document.querySelector<HTMLElement>(".hero-frame")?.getBoundingClientRect();
       return { bottom: hero?.bottom ?? 0, height: hero?.height ?? 0, viewportHeight: innerHeight };
@@ -66,13 +66,13 @@ test("hero fits short Windows desktop viewports without becoming undersized", as
   }
 
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await expect.poll(() => page.locator(".hero-frame").evaluate((hero) => hero.getBoundingClientRect().height)).toBe(675);
 });
 
 test("navigation uses the collision-free breakpoint", async ({ page }) => {
   await page.setViewportSize({ width: 768, height: 900 });
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await expect(page.getByRole("button", { name: "Open navigation" })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Primary navigation" })).toBeHidden();
 
@@ -92,7 +92,7 @@ test("navigation uses the collision-free breakpoint", async ({ page }) => {
 
 test("mobile navigation closes with Escape and restores focus", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   const toggle = page.getByRole("button", { name: "Open navigation" });
   await toggle.click();
   await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toBeVisible();
@@ -103,7 +103,7 @@ test("mobile navigation closes with Escape and restores focus", async ({ page })
 
 test("sticky navigation leaves anchored sections visible on ultrawide screens", async ({ page }) => {
   await page.setViewportSize({ width: 2560, height: 1440 });
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await page.getByRole("link", { name: "Features", exact: true }).click();
 
   await expect.poll(async () => {
@@ -117,7 +117,7 @@ test("sticky navigation leaves anchored sections visible on ultrawide screens", 
 
 test("carousels remain operable after repeated navigation", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
 
   const nextSolution = page.getByRole("button", { name: "Next solution" });
   for (let index = 0; index < 8; index += 1) await nextSolution.click();
