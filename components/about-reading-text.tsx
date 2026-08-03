@@ -16,9 +16,9 @@ export function AboutReadingText() {
   return (
     <p
       ref={targetRef}
-      aria-label={accessibleText}
       className="mt-3 text-[20px] font-semibold leading-[1.3125] tracking-[-.05em] sm:text-2xl"
     >
+      <span className="sr-only">{accessibleText}</span>
       <span aria-hidden="true">
         <span className="text-[#1b1b1b]">
           We are here to redefine how you interact with money<br className="hidden sm:block" />

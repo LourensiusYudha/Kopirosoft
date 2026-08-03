@@ -1,12 +1,13 @@
 "use client";
 
 import { animate, useMotionValue, useReducedMotion } from "motion/react";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export type CarouselDirection = -1 | 1;
 
 export function useInfiniteCarousel(itemCount: number) {
   const reduce = useReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const firstItemRef = useRef<HTMLElement>(null);
@@ -80,6 +81,7 @@ export function useInfiniteCarousel(itemCount: number) {
 
       indexRef.current = nextIndex;
       x.set(-nextIndex * step);
+      setActiveIndex(((nextIndex % itemCount) + itemCount) % itemCount);
     }
 
     processingRef.current = false;
@@ -90,5 +92,5 @@ export function useInfiniteCarousel(itemCount: number) {
     void runQueue();
   };
 
-  return { firstItemRef, move, trackRef, viewportRef, x };
+  return { activeIndex, firstItemRef, move, trackRef, viewportRef, x };
 }

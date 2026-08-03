@@ -77,7 +77,7 @@ function Nav() {
     <header className="sticky top-0 z-40 flex h-[60px] items-center justify-between border-b border-black/[.06] bg-white/95 px-6 backdrop-blur-xl sm:px-10 lg:px-12">
       <a className="focus-ring rounded-md" href="#home"><FinanceLogo className="text-[17px]" /></a>
       <DesktopNav />
-      <div className="hidden md:block"><DownloadButton /></div>
+      <div className="hidden min-[880px]:block"><DownloadButton /></div>
       <MobileNav />
     </header>
   );
@@ -85,8 +85,8 @@ function Nav() {
 
 function HeroWidgets() {
   return (
-    <div className="relative mx-auto h-[250px] max-w-[1110px] overflow-hidden [mask-image:linear-gradient(to_bottom,#000_60%,transparent)]">
-      <div className="currency-widget absolute left-1 top-12 w-[34%] -rotate-[8deg] p-5 opacity-45">
+    <div aria-hidden="true" className="relative mx-auto h-[220px] max-w-[1110px] overflow-hidden [mask-image:linear-gradient(to_bottom,#000_60%,transparent)] sm:h-[250px]">
+      <div className="currency-widget absolute -left-[46%] top-12 w-[68%] -rotate-[8deg] p-3 opacity-45 sm:left-1 sm:w-[34%] sm:p-5">
         <span className="text-sm font-semibold">Exchange</span>
         <div className="mt-5 grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-xs text-[#777]">
           <span className="flex min-w-0 items-center gap-2 rounded-full border border-[#dcdcdc] px-2 py-1">
@@ -104,29 +104,29 @@ function HeroWidgets() {
         <div className="mt-3 grid grid-cols-2 text-2xl font-semibold text-[#f09235]"><span>$ 1,000</span><span>€ 0,0</span></div>
         <div className="mt-4 h-7 bg-[#eef5ff]" />
       </div>
-      <div className="currency-widget absolute left-1/2 top-7 w-[34%] -translate-x-1/2 overflow-hidden opacity-55">
-        <div className="relative grid grid-cols-2 text-sm">
+      <div className="currency-widget absolute left-1/2 top-7 w-[78%] -translate-x-1/2 overflow-hidden opacity-55 sm:w-[34%]">
+        <div className="relative grid grid-cols-2 text-[11px] sm:text-sm">
           <span className="absolute bottom-0 left-1/2 top-0 border-l border-[#dedede]" aria-hidden="true" />
-          <div className="p-5 pr-6">
+          <div className="p-3 pr-4 sm:p-5 sm:pr-6">
             <span className="text-[#777]">From</span>
-            <Image src="/images/logo-neobank.png" alt="Neobank logo" width={41} height={41} className="mt-2 h-8 w-auto object-contain" />
-            <b className="mt-2 block text-lg">Neobank</b>
+            <Image src="/images/logo-neobank.png" alt="Neobank logo" width={41} height={41} className="mt-2 h-6 w-auto object-contain sm:h-8" />
+            <b className="mt-2 block text-[13px] sm:text-lg">Neobank</b>
             <span className="text-[#777]">Anthony Jobiele</span>
           </div>
-          <div className="p-5 pl-6">
+          <div className="p-3 pl-4 sm:p-5 sm:pl-6">
             <span className="text-[#777]">To</span>
-            <Image src="/images/logo-bank-america.png" alt="Bank of America logo" width={41} height={39} className="mt-2 h-8 w-auto object-contain" />
-            <b className="mt-2 block whitespace-nowrap text-lg">Bank of America</b>
+            <Image src="/images/logo-bank-america.png" alt="Bank of America logo" width={41} height={39} className="mt-2 h-6 w-auto object-contain sm:h-8" />
+            <b className="mt-2 block whitespace-nowrap text-[13px] sm:text-lg">Bank of America</b>
             <span className="text-[#777]">Lebron Rayden</span>
           </div>
           <span className="absolute left-1/2 top-[54%] grid size-8 -translate-x-1/2 place-items-center rounded-full border border-[#dedede] bg-white text-[#ee8a73]" aria-hidden="true"><ArrowsLeftRight size={15} /></span>
         </div>
-        <div className="grid grid-cols-2 px-5 pb-5">
-          <div className="border-t border-[#e7e7e7] pt-3"><span className="block text-sm text-[#b9b9b9]">Amount</span><strong className="mt-1 block text-3xl font-semibold text-[#f5afa0]">$ 1,000</strong></div>
-          <div className="border-t border-[#e7e7e7] pl-6 pt-3"><span className="block text-sm text-[#b9b9b9]">Amount</span><strong className="mt-1 block text-3xl font-semibold text-[#f5afa0]">$ 1,000</strong></div>
+        <div className="grid grid-cols-2 px-3 pb-3 sm:px-5 sm:pb-5">
+          <div className="border-t border-[#e7e7e7] pt-3"><span className="block text-xs text-[#b9b9b9] sm:text-sm">Amount</span><strong className="mt-1 block text-2xl font-semibold text-[#f5afa0] sm:text-3xl">$ 1,000</strong></div>
+          <div className="border-t border-[#e7e7e7] pl-4 pt-3 sm:pl-6"><span className="block text-xs text-[#b9b9b9] sm:text-sm">Amount</span><strong className="mt-1 block text-2xl font-semibold text-[#f5afa0] sm:text-3xl">$ 1,000</strong></div>
         </div>
       </div>
-      <div className="currency-widget absolute right-1 top-12 w-[34%] rotate-[8deg] p-5 opacity-55">
+      <div className="currency-widget absolute -right-[46%] top-12 w-[68%] rotate-[8deg] p-3 opacity-55 sm:right-1 sm:w-[34%] sm:p-5">
         <div className="flex justify-between"><div><b className="block text-lg">USD to IDR</b><span className="text-xs text-[#777]">United States Dollar to Rupiah</span></div><strong className="text-lg text-[#f09235]">$ 200</strong></div>
         <div className="mini-line mt-5 h-20" />
       </div>
@@ -241,7 +241,7 @@ function Savings() {
       <Reveal>
         <div>
           <div className="inline-flex items-start">
-            <h2 className="text-[30px] font-bold leading-none tracking-[-.02em]">Saving up to 3% AER Interest</h2>
+            <h2 className="text-2xl font-bold leading-none tracking-[-.02em] sm:text-[30px]">Saving up to 3% AER Interest</h2>
             <SectionMosaic />
           </div>
           <p className="mt-2 max-w-[425px] text-[15px] leading-[19.5px]">Life, meet savings. Frow your money with 3% AER interest on Instant Access Savings, paid every day</p>
@@ -251,7 +251,7 @@ function Savings() {
         <div className="orange-corner left-0 top-8" aria-hidden="true" />
         <div className="relative aspect-[4.35] min-h-[240px] overflow-hidden rounded-lg">
           <Image src="/images/cash-card.webp" alt="Cash savings at a checkout" fill className="object-cover object-[center_20%]" sizes="(max-width: 768px) 100vw, 1344px" />
-          <span className="absolute bottom-6 right-6 size-7 bg-[#f09235] sm:size-9" />
+          <span className="absolute bottom-6 right-6 size-7 bg-[#f09235] sm:size-9" aria-hidden="true" />
         </div>
       </Reveal>
     </section>
@@ -263,7 +263,7 @@ function Testimonials() {
     <section id="pricing" className="pt-10">
       <div className="container-wide text-center">
         <Reveal>
-          <h2 className="text-[42px] font-bold leading-none tracking-[-.02em]">Join the 70+ million using Finance</h2>
+          <h2 className="text-[34px] font-bold leading-none tracking-[-.02em] sm:text-[42px]">Join the 70+ million using Finance</h2>
           <div className="mt-8"><DownloadButton label="Download the app" /></div>
           <p className="mx-auto mt-9 max-w-[750px] text-[15px] leading-[19.5px] text-[#999]">
             Prices and fees displayed on this page are estimates based on our most common and standard cost structure, available to most account types in most regions where we provide our services. Different prices and fees may apply in different regions, for different account types. The prices and fees that apply to you are available for review during account registration and are also available at any time from the Fees link in your Finance App account. Log in to your account to review the latest fees. Please note that making payments with currency conversion is only available in permitted jurisdictions.
@@ -282,7 +282,14 @@ const footerColumns = [
 ];
 
 function Footer() {
-  const socials = [YoutubeLogo, LinkedinLogo, GithubLogo, XLogo, DiscordLogo, InstagramLogo];
+  const socials = [
+    { Icon: YoutubeLogo, label: "Finance on YouTube" },
+    { Icon: LinkedinLogo, label: "Finance on LinkedIn" },
+    { Icon: GithubLogo, label: "Finance on GitHub" },
+    { Icon: XLogo, label: "Finance on X" },
+    { Icon: DiscordLogo, label: "Finance on Discord" },
+    { Icon: InstagramLogo, label: "Finance on Instagram" },
+  ];
   return (
     <footer className="mt-5 border-t border-[#dedede]">
       <div className="container-wide grid gap-14 pb-[33px] pt-20 lg:grid-cols-[1.7fr_1fr_1fr_1fr] lg:gap-10 xl:grid-cols-[598px_180px_180px_180px] xl:gap-[60px]">
@@ -291,7 +298,7 @@ function Footer() {
           <p className="mt-5 text-xs leading-[15.75px] text-[#888]">For a Smarter Future.<br />Banking & Beyond</p>
           <div className="mt-[45px] flex flex-1 items-start"><span className="brand-dots footer-dots origin-top-left scale-[4.09]" aria-hidden="true" /></div>
           <div className="flex gap-2">
-            {socials.map((Icon, index) => <a href="#home" key={index} aria-label="Finance social channel" className="focus-ring grid size-8 place-items-center rounded border border-[#dedede] text-[#555] hover:text-[#1b1b1b]"><Icon size={17} /></a>)}
+            {socials.map(({ Icon, label }) => <a href="#home" key={label} aria-label={label} className="focus-ring grid size-8 place-items-center rounded border border-[#dedede] text-[#555] hover:text-[#1b1b1b]"><Icon size={17} /></a>)}
           </div>
           <p className="mt-4 text-xs text-[#888]">© 2026 Finance, Inc. All rights reserved</p>
         </div>
@@ -322,7 +329,7 @@ export default function Home() {
         <section id="home" className="px-4">
           <div className="relative min-h-[620px] overflow-hidden rounded-lg sm:min-h-[650px] lg:min-h-[675px]">
             <Image src="/images/hero.webp" alt="Customer reviewing receipts while managing daily finances" fill priority className="object-cover object-top" sizes="(max-width: 1920px) 100vw, 1888px" />
-            <div className="absolute inset-x-0 top-0 h-[48%] bg-gradient-to-b from-white/45 to-transparent" />
+            <div className="absolute inset-x-0 top-0 h-[48%] bg-gradient-to-b from-white/45 to-transparent" aria-hidden="true" />
             <div className="absolute left-7 top-12 max-w-[670px] sm:left-9 sm:top-14">
               <h1 className="hero-headline">
                 <span className="block text-[30px] leading-none tracking-[-.0515em] sm:text-[42px]">for a Smarter Future.</span>

@@ -33,6 +33,7 @@ button { cursor: pointer; }
 .container-wide { width: calc(100% - 96px); margin-inline: auto; }
 .section-space { padding-block: 96px; }
 section[id] { scroll-margin-top: 72px; }
+:focus { scroll-margin-top: 72px; scroll-margin-bottom: 32px; }
 .focus-ring:focus-visible { outline: 3px solid #ff9a30; outline-offset: 4px; }
 .brand-mark { position: relative; display: inline-flex; align-items: center; font-weight: 800; letter-spacing: -0.06em; }
 .hero-headline {
@@ -129,6 +130,7 @@ section[id] { scroll-margin-top: 72px; }
   .section-space { padding-block: 76px; }
 }
 @media (min-width: 1500px) {
+  section[id], :focus { scroll-margin-top: calc(4.1666667vw + 12px); }
   body {
     display: flex;
     justify-content: center;

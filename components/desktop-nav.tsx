@@ -6,7 +6,7 @@ export function DesktopNav() {
   const { activeSection, setActiveSection } = useActiveSection();
 
   return (
-    <nav aria-label="Primary navigation" className="absolute left-1/2 hidden -translate-x-1/2 items-center rounded-lg border border-[#dedede] bg-white p-1 md:flex">
+    <nav aria-label="Primary navigation" className="absolute left-1/2 hidden -translate-x-1/2 items-center rounded-lg border border-[#dedede] bg-white p-1 min-[880px]:flex">
       {navigationLinks.map(({ label, href, id }) => {
         const active = activeSection === id;
 

@@ -87,22 +87,27 @@ function Overlay({ type }: { type: string }) {
 }
 
 export function Showcase() {
-  const { firstItemRef, move, trackRef, viewportRef, x } = useInfiniteCarousel(slides.length);
+  const { activeIndex, firstItemRef, move, trackRef, viewportRef, x } = useInfiniteCarousel(slides.length);
 
   return (
-    <section id="solutions" className="dark-showcase mx-4 h-[704px] overflow-hidden rounded-lg py-14 text-white lg:py-16">
-      <div className="flex items-start justify-between gap-6 px-8 sm:px-12">
+    <section id="solutions" className="dark-showcase mx-4 min-h-[704px] overflow-hidden rounded-lg py-14 text-white lg:h-[704px] lg:py-16">
+      <div className="flex flex-col items-start justify-between gap-6 px-8 sm:flex-row sm:px-12">
         <h2 className="max-w-[520px] text-2xl font-bold leading-[1.18] tracking-[-.02em] sm:text-3xl">
           Empower your financial future<br />with smart banking solutions.
         </h2>
-        <div className="flex shrink-0 gap-2 pt-2">
-          <button className="focus-ring grid size-11 place-items-center rounded-lg bg-[#6d3425] text-[#ed6b43] transition-transform duration-200 active:scale-[.96]" onClick={() => move(-1)} aria-label="Previous solution"><ArrowLeft size={20} /></button>
-          <button className="focus-ring grid size-11 place-items-center rounded-lg bg-white text-[#1b1b1b] transition-transform duration-200 active:scale-[.96]" onClick={() => move(1)} aria-label="Next solution"><ArrowRight size={20} /></button>
+        <div className="flex shrink-0 self-end gap-2 pt-2 sm:self-auto">
+          <button type="button" aria-controls="solutions-carousel" className="focus-ring grid size-11 place-items-center rounded-lg bg-[#6d3425] text-[#ed6b43] transition-transform duration-200 active:scale-[.96]" onClick={() => move(-1)} aria-label="Previous solution"><ArrowLeft size={20} /></button>
+          <button type="button" aria-controls="solutions-carousel" className="focus-ring grid size-11 place-items-center rounded-lg bg-white text-[#1b1b1b] transition-transform duration-200 active:scale-[.96]" onClick={() => move(1)} aria-label="Next solution"><ArrowRight size={20} /></button>
         </div>
       </div>
       <div className="mt-12 px-8 pb-2 sm:px-12">
+        <p className="sr-only" aria-live="polite" aria-atomic="true">
+          Solution {activeIndex + 1} of {slides.length}: {slides[activeIndex].title}
+        </p>
         <div
           ref={viewportRef}
+          id="solutions-carousel"
+          role="region"
           aria-label="Smart banking solutions"
           aria-roledescription="carousel"
           className="overflow-hidden"
@@ -113,11 +118,14 @@ export function Showcase() {
                 ref={index === 0 ? firstItemRef : undefined}
                 key={`${slide.copy}-${slide.image}`}
                 aria-hidden={slide.copy !== 1}
+                aria-label={`${(index % slides.length) + 1} of ${slides.length}`}
+                aria-roledescription="slide"
+                role="group"
                 className="w-full shrink-0 sm:w-[calc((100%-20px)/2)] xl:w-[calc((100%-40px)/3)]"
               >
                 <div className="relative aspect-[1.05] overflow-hidden rounded-lg">
                   <Image src={slide.image} alt="" fill className="object-cover" sizes="(max-width: 768px) 82vw, 360px" />
-                  <Overlay type={slide.type} />
+                  <div aria-hidden="true"><Overlay type={slide.type} /></div>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold leading-[23px] tracking-[-.02em]">{slide.title}</h3>
                 <p className="mt-3 text-[15px] leading-[19.5px] text-white/50">{slide.body}</p>

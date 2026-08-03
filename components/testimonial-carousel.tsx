@@ -31,12 +31,14 @@ const loopedTestimonials = Array.from({ length: 3 }, (_, copy) =>
 ).flat();
 
 export function TestimonialCarousel() {
-  const { firstItemRef, move, trackRef, viewportRef, x } = useInfiniteCarousel(testimonials.length);
+  const { activeIndex, firstItemRef, move, trackRef, viewportRef, x } = useInfiniteCarousel(testimonials.length);
 
   return (
     <div className="container-wide mt-6">
       <div className="mx-auto mb-4 flex max-w-[1244px] justify-end gap-2">
         <button
+          type="button"
+          aria-controls="testimonial-carousel"
           className="focus-ring grid size-11 place-items-center rounded-lg bg-[#f4f4f4] text-[#d66a47] transition-transform duration-200 active:scale-[.96]"
           onClick={() => move(-1)}
           aria-label="Previous testimonial"
@@ -44,6 +46,8 @@ export function TestimonialCarousel() {
           <ArrowLeft size={20} />
         </button>
         <button
+          type="button"
+          aria-controls="testimonial-carousel"
           className="focus-ring grid size-11 place-items-center rounded-lg bg-[#1b1b1b] text-white transition-transform duration-200 active:scale-[.96]"
           onClick={() => move(1)}
           aria-label="Next testimonial"
@@ -52,8 +56,13 @@ export function TestimonialCarousel() {
         </button>
       </div>
 
+      <p className="sr-only" aria-live="polite" aria-atomic="true">
+        Testimonial {activeIndex + 1} of {testimonials.length}: {testimonials[activeIndex].name}
+      </p>
       <div
         ref={viewportRef}
+        id="testimonial-carousel"
+        role="region"
         aria-label="Customer testimonials"
         aria-roledescription="carousel"
         className="mx-auto max-w-[1244px] overflow-hidden"
@@ -64,6 +73,9 @@ export function TestimonialCarousel() {
               ref={index === 0 ? firstItemRef : undefined}
               key={`${testimonial.copy}-${testimonial.name}`}
               aria-hidden={testimonial.copy !== 1}
+              aria-label={`${(index % testimonials.length) + 1} of ${testimonials.length}`}
+              aria-roledescription="slide"
+              role="group"
               className="testimonial-card relative aspect-[.66] w-full shrink-0 overflow-hidden rounded-lg text-white sm:w-[calc((100%-16px)/2)] lg:w-[calc((100%-28px)/2)] xl:w-[calc((100%-56px)/3)]"
             >
               <Image

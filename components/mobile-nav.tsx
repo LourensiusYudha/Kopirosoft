@@ -2,27 +2,65 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { List, X } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { navigationLinks, useActiveSection } from "@/components/use-active-section";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
   const { activeSection, setActiveSection } = useActiveSection();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const focusFirstLink = window.requestAnimationFrame(() => {
+      panelRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+    });
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      window.requestAnimationFrame(() => toggleRef.current?.focus());
+    };
+
+    const closeOnOutsidePress = (event: PointerEvent) => {
+      if (event.target instanceof Node && !rootRef.current?.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    document.addEventListener("pointerdown", closeOnOutsidePress);
+
+    return () => {
+      window.cancelAnimationFrame(focusFirstLink);
+      document.removeEventListener("keydown", closeOnEscape);
+      document.removeEventListener("pointerdown", closeOnOutsidePress);
+    };
+  }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div ref={rootRef} className="min-[880px]:hidden">
       <button
+        ref={toggleRef}
+        type="button"
         className="focus-ring grid size-11 place-items-center rounded-lg bg-[#1b1b1b] text-white"
         onClick={() => setOpen((value) => !value)}
         aria-label={open ? "Close navigation" : "Open navigation"}
         aria-expanded={open}
+        aria-controls="mobile-navigation"
       >
         {open ? <X size={22} weight="bold" /> : <List size={22} weight="bold" />}
       </button>
       <AnimatePresence>
         {open && (
-          <motion.div
+          <motion.nav
+            ref={panelRef}
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
             className="absolute inset-x-4 top-[58px] z-20 overflow-hidden rounded-xl bg-[#1b1b1b] p-3 text-white shadow-[0_24px_60px_rgba(0,0,0,.22)]"
             initial={reduce ? false : { opacity: 0, y: -12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -46,7 +84,7 @@ export function MobileNav() {
                 {label}
               </motion.a>
             ))}
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </div>
